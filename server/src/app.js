@@ -18,6 +18,20 @@ if (process.env.NODE_ENV === "production" && !process.env.VERCEL) {
   app.use(express.static(path.join(__dirname, "../../client/dist")));
 }
 
+// Add a root route for testing
+app.get("/", (req, res) => {
+  res.json({ 
+    message: "DevConnect API is running!", 
+    timestamp: new Date().toISOString(),
+    routes: {
+      auth: "/api/test, /api/signup, /api/login, /api/logout",
+      profile: "/api/profile/view, /api/profile/edit",
+      requests: "/api/request/send/:status/:toUserId, /api/request/review/:status/:requestId",
+      users: "/api/user/requests/received, /api/user/connections, /api/feed"
+    }
+  });
+});
+
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
