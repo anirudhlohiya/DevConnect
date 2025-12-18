@@ -4,13 +4,12 @@ const profileRouter = express.Router();
 const { userAuth } = require("../middlewares/auth");
 const { validateEditProfileData } = require("../utils/validation");
 
-profileRouter.get("/check-cookies", (req, res) => {
+profileRouter.get("/api/check-cookies", (req, res) => {
   console.log("Cookies received:", req.cookies);
   res.send(req.cookies);
 });
 
-
-profileRouter.get("/profile/view", userAuth, async (req, res) => {
+profileRouter.get("/api/profile/view", userAuth, async (req, res) => {
   try {
     const user = req.user;
 
@@ -20,7 +19,7 @@ profileRouter.get("/profile/view", userAuth, async (req, res) => {
   }
 });
 
-profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
+profileRouter.patch("/api/profile/edit", userAuth, async (req, res) => {
   try {
     if (!validateEditProfileData(req)) {
       throw new Error("Invalid Edit Request");

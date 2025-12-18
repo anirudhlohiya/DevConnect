@@ -8,7 +8,7 @@ const User = require("../models/user");
 const USER_SAFE_DATA = "firstName lastName photoUrl age gender about skills";
 
 // Get all the pending connection request for the loggedIn user
-userRouter.get("/user/requests/received", userAuth, async (req, res) => {
+userRouter.get("/api/user/requests/received", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
 
@@ -23,11 +23,11 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
       data: connectionRequests,
     });
   } catch (err) {
-    req.statusCode(400).send("ERROR: " + err.message);
+    res.status(400).send("ERROR: " + err.message);
   }
 });
 
-userRouter.get("/user/connections", userAuth, async (req, res) => {
+userRouter.get("/api/user/connections", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
 
@@ -55,7 +55,7 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
   }
 });
 
-userRouter.get("/feed", userAuth, async (req, res) => {
+userRouter.get("/api/feed", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
 
@@ -89,4 +89,5 @@ userRouter.get("/feed", userAuth, async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
 module.exports = userRouter;

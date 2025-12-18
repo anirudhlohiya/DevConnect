@@ -4,8 +4,12 @@ const { validateSignUpData } = require("../utils/validation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
+// Add a simple test route to check if the server is working
+authRouter.get("/test", (req, res) => {
+  res.json({ message: "Auth route is working!" });
+});
 
-authRouter.post("/signup", async (req, res) => {
+authRouter.post("/api/signup", async (req, res) => {
   try {
     // Validation of data
     validateSignUpData(req);
@@ -32,13 +36,12 @@ authRouter.post("/signup", async (req, res) => {
 
     res.json({ message: "User Added successfully!", data: savedUser });
   } catch (err) {
+    console.error("Signup error:", err);
     res.status(400).send("ERROR : " + err.message);
   }
 });
 
-
-
-authRouter.post("/login", async (req, res) => {
+authRouter.post("/api/login", async (req, res) => {
   
   try {
     const { emailId, password } = req.body;
@@ -56,27 +59,23 @@ authRouter.post("/login", async (req, res) => {
 
       // Add the token to cookie and send the response back to the user
       res.cookie("token", token, {
-        expires: new Date(Date.now() + 8 + 3600000),
+        expires: new Date(Date.now() + 8 * 3600000),
       });
       res.send("Login Successful!!!!");
     } else {
       throw new Error("Invalid credentials");
     }
   } catch (err) {
+    console.error("Login error:", err);
     res.status(400).send("ERROR: " + err.message);
   }
 });
 
-
-
-authRouter.post("/logout", async (req, res) => {
+authRouter.post("/api/logout", async (req, res) => {
   res.cookie("token", null, {    // removing token from cookie and seting it to null and expiring it 
     expires: new Date(Date.now()),
   });
   res.send("Logout Successful!!");
 });
 
-
-
 module.exports = authRouter;
-
