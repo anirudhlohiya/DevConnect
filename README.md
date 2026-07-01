@@ -18,7 +18,7 @@ DevConnect is a platform for developers to connect, share profiles, and build pr
 ## Features
 
 - User authentication (signup/login/logout)
-- Profile management
+- Profile management 
 - Connection requests system
 - User discovery feed
 - Secure password handling
